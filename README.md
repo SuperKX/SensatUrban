@@ -75,6 +75,7 @@ Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8
 
 - Setup the environment
 > 🔔 windows系统下需要将路径到代码根目录下
+> 🔔 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本
 ```
 conda create -n randlanet python=3.5
 source activate randlanet
@@ -118,9 +119,6 @@ The compressed results can be found in `/test/Log_*/test_preds/submission.zip`. 
 [evaluation server](https://competitions.codalab.org/competitions/31519#participate-submit_results). 
 
 - The Urban3D Challenge@ICCV2021 Forum:
-Please scan the code to join our wechat group or drop a message [here](https://competitions.codalab.org/forums/28215/):
-<p align="center"> <img src="imgs/wechat_code.jpg" width="50%"> </p>
-
 
 ### Citation
 If you find our work useful in your research, please consider citing:
