@@ -74,6 +74,7 @@ Here we provide the training and evaluation script of [RandLA-Net](https://githu
 Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). Uncompress the folder and move it to `/Dataset/SensatUrban`.
 
 - Setup the environment
+> windows系统下需要将路径到代码根目录下
 ```
 conda create -n randlanet python=3.5
 source activate randlanet
