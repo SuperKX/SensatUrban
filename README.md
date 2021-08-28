@@ -73,20 +73,20 @@ Here we provide the training and evaluation script of [RandLA-Net](https://githu
 
 Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). Uncompress the folder and move it to `/Dataset/SensatUrban`.
 
-- Setup the environment
-🔥 windows系统下需要将路径到代码根目录下。
+- Setup the environment  
+🔥 windows系统下需要将路径到代码根目录下。  
 ```
 conda create -n randlanet python=3.5
 source activate randlanet
 pip install -r helper_requirements.txt
 ```
-🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本。
-🔥 部分库是需要的，这里补充：
+🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本。  
+🔥 部分库是需要的，这里补充：  
 ```
 pip install cython
 pip install numpy
 ```
-🔥 后续执行批处理文件的命令“**sh compile_op.sh**”，此处改为逐行执行
+🔥 后续执行批处理文件的命令“**sh compile_op.sh**”，此处改为逐行执行  
 ```
 cd utils/nearest_neighbors
 python setup.py install --home="."
