@@ -71,7 +71,7 @@ Here we provide the training and evaluation script of [RandLA-Net](https://githu
 
 Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). Uncompress the folder and move it to `/Dataset/SensatUrban`.
 
-- Setup the environment  
+- Setup the environment (**windows环境下**)  
 
 🔥 windows系统下需要将路径到代码根目录下。  
 ```
@@ -84,6 +84,8 @@ pip install -r helper_requirements.txt
 ```
 pip install cython
 pip install numpy
+pip install sklearn
+pip install open3d
 ```
 🔥 后续执行批处理文件的命令“**sh compile_op.sh**”，此处改为逐行执行  
 ```
@@ -91,10 +93,11 @@ cd utils/nearest_neighbors
 python setup.py install --home="."
 cd ../../
 cd utils/cpp_wrappers/cpp_subsampling
-cd ..
 ```
  
 - Preparing the dataset
+🔥 首先回到代码根目录。  
+🔥 下面“**$YOURPATH**”为 📁**data_release.zip**解压后地址，即到文件夹/train和/test的上一级
 ```
 python input_preparation.py --dataset_path $YOURPATH
 cd $YOURPATH; 
