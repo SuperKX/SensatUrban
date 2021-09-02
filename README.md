@@ -12,14 +12,14 @@ This is the official repository of the **SensatUrban** dataset. For technical de
 🔥 原始说明此处不再赘述。本文档仅用于记录配置使用情况。
 
 
-## Environment Configuration （Ubuntu18）##
+## Environment Configuration （Ubuntu18）    
 
 ### 0、环境说明 ###
 本人环境是UBUNTU18 + CUDA10.0 + cudnn7.4 + tensorflow1.14
 
-🔥 注意：
-1、亲测windows下环境配置会存在问题，30系显卡不支持CUDA10，而更高的CUDA版本无法兼容tensorflow1.14。tensorflow2.x看评论无法跑通，未验证。
-2、亲测过，CUDA11.O + tensorflow1.14 可以运行，但是gpu不运行，cpu运行。[参考1](https://github.com/QingyongHu/SensatUrban/issues/13) [参考2](https://blog.csdn.net/caiguanhong/article/details/112184290)
+🔥 注意：    
+1、亲测windows下环境配置会存在问题，30系显卡不支持CUDA10，而更高的CUDA版本无法兼容tensorflow1.14。tensorflow2.x看评论无法跑通，未验证。    
+2、亲测过，CUDA11.O + tensorflow1.14 可以运行，但是gpu不运行，cpu运行。[参考1](https://github.com/QingyongHu/SensatUrban/issues/13) [参考2](https://blog.csdn.net/caiguanhong/article/details/112184290)    
 
 ### 1、下载数据集 ###
 Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). 
