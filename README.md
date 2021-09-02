@@ -1,4 +1,3 @@
-[![arXiv](https://img.shields.io/badge/arXiv-2009.03137-b31b1b.svg)](https://arxiv.org/abs/2009.03137)
 
 # Towards Semantic Segmentation of Urban-Scale 3D Point Clouds: A Dataset, Benchmarks and Challenges
 
@@ -10,100 +9,53 @@ This is the official repository of the **SensatUrban** dataset. For technical de
 **[[Paper](http://arxiv.org/abs/2009.03137)] [[Blog](https://zhuanlan.zhihu.com/p/259208850)] [[Video](https://www.youtube.com/watch?v=IG0tTdqB3L8)] [[Project page](https://github.com/QingyongHu/SensatUrban)] [[Download](https://forms.gle/m4HJiqZxnq8rmjc8A)] 
 [[Evaluation](https://competitions.codalab.org/competitions/31519#participate-submit_results)]** <br />
 
-### (1) Dataset
-
-#### 1.1 Overview
-
-This dataset is an urban-scale photogrammetric point cloud dataset with nearly three billion richly annotated points, 
-which is five times the number of labeled points than the existing largest point cloud dataset. 
-Our dataset consists of large areas from two UK cities, covering about 6 km^2 of the city landscape. 
-In the dataset, each 3D point is labeled as one of 13 semantic classes, such as *ground*, *vegetation*, 
-*car*, *etc.*. 
-
-<p align="center"> <img src="imgs/Fig1.png" width="100%"> </p>
-<p align="center"> <img src="imgs/Table1.png" width="100%"> </p>
-
-#### 1.2 Data Collection
-
-The 3D point clouds are generated from high-quality aerial images captured by a 
-professional-grade UAV mapping system. In order to fully and evenly cover the survey area, 
-all flight paths are pre-planned in a grid fashion and automated by the flight control system (e-Motion).
-
-<p align="center"> <img src="imgs/Fig2.png" width="70%"> </p>
-
-#### 1.3 Semantic Annotations
-
-<p align="center"> <img src="imgs/Fig3.png" width="100%"> </p>
-
-- Ground: including impervious surfaces, grass, terrain
-- Vegetation: including trees, shrubs, hedges, bushes
-- Building: including commercial / residential buildings
-- Wall: including fence, highway barriers, walls
-- Bridge: road bridges
-- Parking: parking lots
-- Rail: railroad tracks
-- Traffic Road: including main streets, highways
-- Street Furniture: including benches, poles, lights
-- Car: including cars, trucks, HGVs
-- Footpath: including walkway, alley
-- Bike: bikes / bicyclists
-- Water: rivers / water canals
+🔥 原始说明此处不再赘述。本文档仅用于记录配置使用情况。
 
 
-#### 1.4 Statistics
-<p align="center"> <img src="imgs/Fig5.png" width="100%"> </p>
+## Environment Configuration （Ubuntu18）##
 
+### 0、环境说明 ###
+本人环境是UBUNTU18 + CUDA10.0 + cudnn7.4 + tensorflow1.14
 
-### (2) Benchmarks
-We extensively evaluate the performance of state-of-the-art algorithms on our dataset 
-and provide a comprehensive analysis of the results. In particular, we identify several key challenges 
-towards urban-scale point cloud understanding. 
+🔥 注意：
+1、亲测windows下环境配置会存在问题，30系显卡不支持CUDA10，而更高的CUDA版本无法兼容tensorflow1.14。tensorflow2.x看评论无法跑通，未验证。
+2、亲测过，CUDA11.O + tensorflow1.14 可以运行，但是gpu不运行，cpu运行。[参考1](https://github.com/QingyongHu/SensatUrban/issues/13) [参考2](https://blog.csdn.net/caiguanhong/article/details/112184290)
 
+### 1、下载数据集 ###
+Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). 
+本人目录结构：`Randlanet（即代码根目录）/Dataset/SensatUrban/train & test`.
 
-### (3) Demo
-
-<p align="center"> <a href="https://youtu.be/IG0tTdqB3L8">Link.</a> </p>
-
-
-### (4) Training and Evaluation
-Here we provide the training and evaluation script of [RandLA-Net](https://github.com/QingyongHu/RandLA-Net) for your reference.
-- Download the dataset 
-
-Download the files named "data_release.zip" [here](https://forms.gle/m4HJiqZxnq8rmjc8A). Uncompress the folder and move it to `/Dataset/SensatUrban`.
-
-- Setup the environment (**windows环境下**)  
-
-🔥 windows系统下需要将路径到代码根目录下。  
+### 2、创建环境 ###
 ```
 conda create -n randlanet python=3.5
 source activate randlanet
 pip install -r helper_requirements.txt
 ```
 🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本。  
-🔥 部分库是需要的，这里补充：  
+执行以下批处理，处理cpp库
+```
+sh compile_op.sh
+```
+### 3、数据预处理 ###
+执行批处理之前，需要安装以下库，否则会出错：  
 ```
 pip install cython
 pip install numpy
 pip install sklearn
 pip install open3d
+pip install tensorflow-gpu==1.14
 ```
-🔥 后续执行批处理文件的命令“**sh compile_op.sh**”，此处改为逐行执行  
-```
-cd utils/nearest_neighbors
-python setup.py install --home="."
-cd ../../
-cd utils/cpp_wrappers/cpp_subsampling
-```
- 
-- Preparing the dataset
-🔥 首先回到代码根目录。  
-🔥 下面“**$YOURPATH**”为 📁**data_release.zip**解压后地址，即到文件夹/train和/test的上一级
+如下运行，执行数据预处理。
 ```
 python input_preparation.py --dataset_path $YOURPATH
-cd $YOURPATH; 
-cd ../; mkdir original_block_ply; mv data_release/train/* original_block_ply; mv data_release/test/* original_block_ply;
+cd $YOURPATH
+cd ../
+mkdir original_block_ply
+mv data_release/train/* original_block_ply
+mv data_release/test/* original_block_ply
 mv data_release/grid* ./
 ```
+ 
 The data should organized in the following format:
 ```
 /Dataset/SensatUrban/
@@ -119,11 +71,12 @@ The data should organized in the following format:
 		  ...
 	    	  └── cambridge_block_34.ply 
 ```
-
+### 4、训练 ###
 - Start training: (Please first modified the root_path)
 ```
 python main_SensatUrban.py --mode train --gpu 0 
 ```
+### 5、评估 ###
 - Evaluation:
 ```
 python main_SensatUrban.py --mode test --gpu 0 
