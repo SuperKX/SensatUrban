@@ -32,6 +32,7 @@ source activate randlanet
 pip install -r helper_requirements.txt
 ```
 🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本。  
+
 执行以下批处理，处理cpp库
 ```
 sh compile_op.sh
@@ -76,6 +77,8 @@ The data should organized in the following format:
 ```
 python main_SensatUrban.py --mode train --gpu 0 
 ```
+🔥 训练前，记得修改class SensatUrban的root_path参数，ubuntu下本人地址为'/home/username/桌面/Randlanet/Dataset'    
+
 ### 5、评估 ###
 - Evaluation:
 ```
