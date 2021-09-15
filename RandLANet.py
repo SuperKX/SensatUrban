@@ -3,6 +3,7 @@ from os import makedirs
 from sklearn.metrics import confusion_matrix
 from tool import DataProcessing as DP
 import tensorflow as tf
+# tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)   # xuek tensorflow报错提示取消
 import numpy as np
 import tf_util
 import time
@@ -15,10 +16,10 @@ def log_out(out_str, f_out):
 
 
 class Network:
-    def __init__(self, dataset, config):
-        flat_inputs = dataset.flat_inputs
+    def __init__(self, dataset, config):  # 这里调用的config为tool.py中的cfg
+        flat_inputs = dataset.flat_inputs  # dataset.batch_train_data的迭代器
         self.config = config
-        # Path of the result folder
+        # Path of the result folder  生成文件路径
         if self.config.saving:
             if self.config.saving_path is None:
                 self.saving_path = time.strftime('results/Log_%Y-%m-%d', time.gmtime())
@@ -27,20 +28,20 @@ class Network:
                 self.saving_path = self.config.saving_path
             makedirs(self.saving_path) if not exists(self.saving_path) else None
 
-        with tf.variable_scope('inputs'):
-            self.inputs = dict()
-            num_layers = self.config.num_layers
-            self.inputs['xyz'] = flat_inputs[:num_layers]
-            self.inputs['neigh_idx'] = flat_inputs[num_layers: 2 * num_layers]
-            self.inputs['sub_idx'] = flat_inputs[2 * num_layers:3 * num_layers]
-            self.inputs['interp_idx'] = flat_inputs[3 * num_layers:4 * num_layers]
-            self.inputs['features'] = flat_inputs[4 * num_layers]
-            self.inputs['labels'] = flat_inputs[4 * num_layers + 1]
-            self.inputs['input_inds'] = flat_inputs[4 * num_layers + 2]
-            self.inputs['cloud_inds'] = flat_inputs[4 * num_layers + 3]
+        with tf.variable_scope('inputs'):  # variable_scope 用于定义创建变量（层）的操作的上下文管理器
+            self.inputs = dict()  # 创建字典
+            num_layers = self.config.num_layers  # tool.py中 ConfigSensatUrban.num_layers==5
+            self.inputs['xyz'] = flat_inputs[:num_layers]  # 0-4
+            self.inputs['neigh_idx'] = flat_inputs[num_layers: 2 * num_layers]  # 5-9
+            self.inputs['sub_idx'] = flat_inputs[2 * num_layers:3 * num_layers]  # 10-14
+            self.inputs['interp_idx'] = flat_inputs[3 * num_layers:4 * num_layers]  # 15-19
+            self.inputs['features'] = flat_inputs[4 * num_layers]  # 20层
+            self.inputs['labels'] = flat_inputs[4 * num_layers + 1]  # 21  标签
+            self.inputs['input_inds'] = flat_inputs[4 * num_layers + 2]  # 22
+            self.inputs['cloud_inds'] = flat_inputs[4 * num_layers + 3]  # 23
 
             self.labels = self.inputs['labels']
-            self.is_training = tf.placeholder(tf.bool, shape=())
+            self.is_training = tf.placeholder(tf.bool, shape=())  # 计算流图
             self.training_step = 1
             self.training_epoch = 0
             self.correct_prediction = 0
@@ -101,7 +102,7 @@ class Network:
 
     def inference(self, inputs, is_training):
 
-        d_out = self.config.d_out
+        d_out = self.config.d_out  # [16, 64, 128, 256, 512]
         feature = inputs['features']
         feature = tf.layers.dense(feature, 8, activation=None, name='fc0')
         feature = tf.nn.leaky_relu(tf.layers.batch_normalization(feature, -1, 0.99, 1e-6, training=is_training))

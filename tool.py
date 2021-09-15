@@ -16,16 +16,16 @@ import nearest_neighbors.lib.python.nearest_neighbors as nearest_neighbors
 
 
 class ConfigSensatUrban:
-    k_n = 16  # KNN
-    num_layers = 5  # Number of layers
-    num_points = 65536  # Number of input points
-    num_classes = 13  # Number of valid classes
-    sub_grid_size = 0.2  # preprocess_parameter
+    k_n = 16  # KNN k近邻
+    num_layers = 5  # Number of layers  层数
+    num_points = 65536  # Number of input points  输入点数量,一个batch的点数量
+    num_classes = 13  # Number of valid classes  有效类别
+    sub_grid_size = 0.2  # preprocess_parameter  预处理分辨率
 
-    batch_size = 4  # batch_size during training
-    val_batch_size = 14  # batch_size during validation and test
-    train_steps = 500  # Number of steps per epochs
-    val_steps = 100  # Number of validation steps per epoch
+    batch_size = 1  # batch_size during training #[xuek] #4
+    val_batch_size = 1  # batch_size during validation and test  #[xuek] #14
+    train_steps = 500*4  # Number of steps per epochs
+    val_steps = 100*4  # Number of validation steps per epoch
 
     sub_sampling_ratio = [4, 4, 4, 4, 2]  # sampling ratio of random sampling at each layer
     d_out = [16, 64, 128, 256, 512]  # feature dimension
@@ -79,7 +79,7 @@ class DataProcessing:
         return xyz_aug, color_aug, idx_aug, label_aug
 
     @staticmethod
-    def shuffle_idx(x):
+    def shuffle_idx(x):  # 打乱索引
         # random shuffle the index
         idx = np.arange(len(x))
         np.random.shuffle(idx)
@@ -143,12 +143,12 @@ class DataProcessing:
 
     @staticmethod
     def read_ply_data(path, with_rgb=True, with_label=True):
-        data = read_ply(path)
-        xyz = np.vstack((data['x'], data['y'], data['z'])).T
+        data = read_ply(path)  # type:(点数量,)
+        xyz = np.vstack((data['x'], data['y'], data['z'])).T  # vstack垂直方向堆叠成新数组(此处应该是分别将xyz存成3个数组,因此此处构后转置)
         if with_rgb and with_label:
-            rgb = np.vstack((data['red'], data['green'], data['blue'])).T
-            labels = data['class']
-            return xyz.astype(np.float32), rgb.astype(np.uint8), labels.astype(np.uint8)
+            rgb = np.vstack((data['red'], data['green'], data['blue'])).T  # rgb信息
+            labels = data['class']  # 类别信息
+            return xyz.astype(np.float32), rgb.astype(np.uint8), labels.astype(np.uint8)  # 返回值为三个矩阵
         elif with_rgb and not with_label:
             rgb = np.vstack((data['red'], data['green'], data['blue'])).T
             return xyz.astype(np.float32), rgb.astype(np.uint8)
