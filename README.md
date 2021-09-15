@@ -93,7 +93,7 @@ The compressed results can be found in `/test/Log_*/test_preds/submission.zip`. 
 ```
 python visualize2ply.py
 ```
-🔥 可视化处理前请自行需要根据需求修改文件地址。
+🔥 可视化处理前请自行需要根据需求修改文件地址。    
 🔥 可视化结果可以通过cloudcompare读入ply文件，scalar选择class一项。
 
 ### Citation
