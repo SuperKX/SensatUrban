@@ -79,7 +79,7 @@ python main_SensatUrban.py --mode train --gpu 0
 ```
 🔥 训练前，记得修改class SensatUrban的root_path参数，ubuntu下本人地址为'/home/username/桌面/Randlanet/Dataset'    
 
-### 5、评估 ###
+### 5、测试 ###
 - Evaluation:
 ```
 python main_SensatUrban.py --mode test --gpu 0 
@@ -88,7 +88,13 @@ python main_SensatUrban.py --mode test --gpu 0
 The compressed results can be found in `/test/Log_*/test_preds/submission.zip`. Then, feel free to submit this results to the 
 [evaluation server](https://competitions.codalab.org/competitions/31519#participate-submit_results). 
 
-- The Urban3D Challenge@ICCV2021 Forum:
+### 6、可视化 ###
+增加了可视化部分的代码，只需要命令行运行：
+```
+python visualize2ply.py
+```
+🔥 可视化处理前请自行需要根据需求修改文件地址。
+🔥 可视化结果可以通过cloudcompare读入ply文件，scalar选择class一项。
 
 ### Citation
 If you find our work useful in your research, please consider citing:
