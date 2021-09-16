@@ -78,6 +78,8 @@ The data should organized in the following format:
 python main_SensatUrban.py --mode train --gpu 0 
 ```
 🔥 训练前，记得修改class SensatUrban的root_path参数，ubuntu下本人地址为'/home/username/桌面/Randlanet/Dataset'    
+🔥 使用cpu则修改参数为“--gpu -1”    
+🔥 本机上tool.py中注释了cpu和gpu不同训练超参数。
 
 ### 5、测试 ###
 - Evaluation:
