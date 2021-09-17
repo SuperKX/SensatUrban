@@ -22,10 +22,10 @@ class ConfigSensatUrban:
     num_classes = 13  # Number of valid classes  有效类别
     sub_grid_size = 0.2  # preprocess_parameter  预处理分辨率
 
-    batch_size = 1  # batch_size during training #[xuek] #4
-    val_batch_size = 1  # batch_size during validation and test  #[xuek] #14
-    train_steps = 500*4  # Number of steps per epochs
-    val_steps = 100*4  # Number of validation steps per epoch
+    batch_size = 4  # batch_size during training #[xuek] #4
+    val_batch_size = 14  # batch_size during validation and test  #[xuek] #14
+    train_steps = 500  # Number of steps per epochs  #500
+    val_steps = 100  # Number of validation steps per epoch  #100
 
     sub_sampling_ratio = [4, 4, 4, 4, 2]  # sampling ratio of random sampling at each layer
     d_out = [16, 64, 128, 256, 512]  # feature dimension
