@@ -31,7 +31,7 @@ conda create -n randlanet python=3.5
 source activate randlanet
 pip install -r helper_requirements.txt
 ```
-🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyyaml”，默认安装了5.3.1版本。  
+🔥 这里没找到pyyaml的5.4版本，直接执行的“pip install pyyaml”，默认安装了5.3.1版本。  
 
 执行以下批处理，处理cpp库
 ```
