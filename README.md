@@ -37,6 +37,10 @@ pip install -r helper_requirements.txt
 ```
 sh compile_op.sh
 ```
+🔥 注意：    
+1、安装g++和gcc，保证两者版本一致。    
+2、utils文件夹需要在正确位置上，否则生成库有问题。
+3、经过验证，python版本不同编译的库不可通用，如python3.5版本编译的不可再python3.6下使用；但ubuntu18编译的库可在ubuntu20下使用。
 ### 3、数据预处理 ###
 执行批处理之前，需要安装以下库，否则会出错：  
 ```
