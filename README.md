@@ -18,7 +18,7 @@ This is the official repository of the **SensatUrban** dataset. For technical de
 本人环境是UBUNTU18 + CUDA10.0 + cudnn7.4 + tensorflow1.14
 
 🔥 注意：    
-1、python3.6+cuda10+tensorflow1.14验证跑通CPU运行环境。
+1、python3.6+cuda10+tensorflow1.14验证跑通CPU运行环境。    
 2、python3.6+cuda11（RTX3090）+tensorflow2.6+keras2.6下配置跑通GPU运行环境，代码需要修改tensorflow库调用，改用tensorflow1版本的书写方式调用。RTX30系显卡支持最低cuda版本为cuda11，tensorflow1.14不支持cuda11。
 
 ### 1、下载数据集 ###
